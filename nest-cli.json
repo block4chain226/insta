@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/insta-gateway/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/insta-gateway/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/insta-gateway",
+  "projects": {
+    "insta-gateway": {
+      "type": "application",
+      "root": "apps/insta-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/insta-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/insta-gateway/tsconfig.app.json"
+      }
+    }
+  }
+}
