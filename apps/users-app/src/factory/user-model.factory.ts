@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IModelFactory } from 'libs/common/interfaces/model-factory.interface';
-import { User } from '../model/User.model';
+import { User } from '../domain/model/User.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserRepository } from '../adapters/user.repository';
