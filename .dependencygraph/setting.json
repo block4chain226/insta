@@ -1,0 +1,15 @@
+{
+  "alias": {
+    "app/common": "libs/common/src",
+    "app/common/*": "libs/common/src/*"
+  },
+  "resolveExtensions": [
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".vue",
+    ".scss",
+    ".less"
+  ]
+}
