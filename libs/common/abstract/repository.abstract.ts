@@ -1,8 +1,8 @@
 import { DeepPartial, Repository } from 'typeorm';
 import { IRepositoryAbstract } from '../ports/out/repository-abstract.interface';
 
-export abstract class BaseRepository<TModel>
-  implements IRepositoryAbstract<TModel>
+export abstract class BaseRepository<TModel, R>
+  implements IRepositoryAbstract<TModel, R>
 {
   constructor(private readonly repository: Repository<TModel>) {}
 
