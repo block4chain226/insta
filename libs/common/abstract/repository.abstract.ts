@@ -6,8 +6,8 @@ export abstract class BaseRepository<TModel, R>
 {
   constructor(private readonly repository: Repository<TModel>) {}
 
-  async create(data: DeepPartial<TModel>): Promise<void> {
+  async create(data: DeepPartial<TModel>): Promise<TModel> {
     const entity = this.repository.create(data);
-    await this.repository.save(entity);
+    return await this.repository.save(entity);
   }
 }

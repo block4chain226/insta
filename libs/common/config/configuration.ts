@@ -9,7 +9,7 @@ export default () => ({
     entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/../../db/migrations/*{.ts,.js}`],
     // autoLoadEntities: true,
-    // synchronize: true,
+    // synchronize: true,pt
     migrationsTableName: 'migrations',
   },
   test_database: {
