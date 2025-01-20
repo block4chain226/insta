@@ -8,6 +8,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { ResponseUserDto } from 'libs/User/dto/response-user.dto';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -16,15 +17,15 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     private readonly usersClient: ClientProxy,
     private readonly publisher: EventPublisher,
   ) {}
-  async execute({ createUserDto }: CreateUserCommand) {
-    const createdUser = this.usersClient.send(
-      RMQ_USERS_PATTERN.CREATE_USER,
-      createUserDto,
+  async execute({ createUserDto }: CreateUserCommand): Promise<void> {
+    const createdUser = await firstValueFrom(
+      this.usersClient.send(RMQ_USERS_PATTERN.CREATE_USER, createUserDto),
     );
+    console.log('🚀 ~ CreateUserHandler ~ createdUser:', createdUser);
 
-    // const vasa = this.publisher.mergeObjectContext(createdUser);
+    const vasa = this.publisher.mergeObjectContext(createdUser);
 
-    // createdUser.commit();
+    vasa.commit();
   }
 }
 
