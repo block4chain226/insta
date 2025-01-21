@@ -5,5 +5,5 @@ export class ResponseUserDto {
   @Expose()
   name: string;
   @Expose()
-  emai: string;
+  email: string;
 }

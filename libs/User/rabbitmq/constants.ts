@@ -1,0 +1,7 @@
+export enum RMQ_USERS_TOKEN {
+  USERS_RMQ = 'USERS_RMQ',
+}
+
+export enum RMQ_USERS_PATTERN {
+  CREATE_USER = 'CREATE_USER',
+}
