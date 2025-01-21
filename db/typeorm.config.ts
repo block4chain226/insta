@@ -10,7 +10,7 @@ export default new DataSource({
   username: `admin`,
   password: `796163`,
   database: `insta`,
-  entities: [`${__dirname}/../src/**/*.entity{.ts,.js}`],
+  entities: [`${__dirname}/../apps/**/*.entity{.ts,.js}`],
   migrations: [`${__dirname}/migrations/*{.ts,.js}`],
   // autoLoadEntities: true,
   // synchronize: false,

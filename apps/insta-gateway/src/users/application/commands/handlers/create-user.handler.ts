@@ -18,14 +18,19 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     private readonly publisher: EventPublisher,
   ) {}
   async execute({ createUserDto }: CreateUserCommand): Promise<void> {
-    const createdUser = await firstValueFrom(
-      this.usersClient.send(RMQ_USERS_PATTERN.CREATE_USER, createUserDto),
+    console.log('CreateUserHandler');
+
+    const createdUser = this.usersClient.emit(
+      RMQ_USERS_PATTERN.CREATE_USER,
+      createUserDto,
     );
+    console.log('loh');
+
     console.log('🚀 ~ CreateUserHandler ~ createdUser:', createdUser);
 
-    const vasa = this.publisher.mergeObjectContext(createdUser);
+    // const vasa = this.publisher.mergeObjectContext(createdUser);
 
-    vasa.commit();
+    // vasa.commit();
   }
 }
 

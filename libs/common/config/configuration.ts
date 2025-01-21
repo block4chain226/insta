@@ -8,7 +8,7 @@ export default () => ({
     database: process.env.POSTGRES_DATABASE,
     entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/../../db/migrations/*{.ts,.js}`],
-    // autoLoadEntities: true,
+    autoLoadEntities: true,
     // synchronize: true,pt
     migrationsTableName: 'migrations',
   },
