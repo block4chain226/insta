@@ -1,3 +1,3 @@
-export interface IRepositoryAbstract<TModel, R> {
+export interface IRepositoryAbstract<TModel, TEntity> {
   create(data: TModel): Promise<TModel>;
 }

@@ -10,7 +10,7 @@ async function bootstrap() {
       urls: ['amqp://localhost:5672'],
       queue: 'users',
       persistance: true,
-      noAck: false,
+      noAck: true,
     },
   });
   app.startAllMicroservices();

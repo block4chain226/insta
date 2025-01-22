@@ -11,16 +11,16 @@ export class User extends IdentityAbstract {
   @Column({ type: 'varchar' })
   password: string;
 
-  async toModel(): Promise<UserModel> {
-    return new UserModel(this.id, this.name, this.email, this.password);
-  }
+  // get toModel(): UserModel {
+  //   return new UserModel(this.id, this.name, this.email, this.password);
+  // }
 
-  static fromModel(model: UserModel): User {
-    const entity = new User();
-    entity.id = model.id;
-    entity.name = model.name;
-    entity.email = model.email;
-    entity.password = model.password;
-    return entity;
-  }
+  // static fromModel(model: UserModel): User {
+  //   const entity = new User();
+  //   entity.id = model.id;
+  //   entity.name = model.name;
+  //   entity.email = model.email;
+  //   entity.password = model.password;
+  //   return entity;
+  // }
 }
