@@ -10,16 +10,20 @@ import configuration from 'libs/common/config/configuration';
 import { UserModelFactory } from './factory/user-model.factory';
 import { UserRepository } from './infrastructure/adapters/user.repository';
 import { UserEntityModelFactory } from './factory/user-entity-model.factory';
+import { UsersSubscriber } from './infrastructure/entety/subscribers/users.subscriber';
+import { HashModule } from 'libs/common/hash/hahs.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     CqrsModule,
+    HashModule,
     DatabaseModule,
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [UsersAppController],
   providers: [
+    UsersSubscriber,
     UsersAppService,
     UserModelFactory,
     UserEntityModelFactory,
