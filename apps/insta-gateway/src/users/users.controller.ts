@@ -20,8 +20,6 @@ export class UsersController {
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(@Body() createUserDto: CreateUserDto): Promise<void> {
-    console.log('users controller');
-
     await this.commandBus.execute<CreateUserCommand, void>(
       new CreateUserCommand(createUserDto),
     );

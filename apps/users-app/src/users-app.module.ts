@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from 'libs/common/config/configuration';
 import { UserModelFactory } from './factory/user-model.factory';
 import { UserRepository } from './infrastructure/adapters/user.repository';
+import { UserEntityModelFactory } from './factory/user-entity-model.factory';
 
 @Module({
   imports: [
@@ -18,6 +19,11 @@ import { UserRepository } from './infrastructure/adapters/user.repository';
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [UsersAppController],
-  providers: [UsersAppService, UserModelFactory, UserRepository],
+  providers: [
+    UsersAppService,
+    UserModelFactory,
+    UserEntityModelFactory,
+    UserRepository,
+  ],
 })
 export class UsersAppModule {}
