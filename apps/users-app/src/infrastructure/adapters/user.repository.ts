@@ -13,7 +13,8 @@ export class UserRepository
   implements IUserRepository
 {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     private readonly entity1ModelFactory: UserEntityModelFactory,
   ) {
     super(userRepository, entity1ModelFactory);

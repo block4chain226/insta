@@ -5,13 +5,17 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { DatabaseModule } from 'libs/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './infrastructure/entety/user.entity';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import configuration from 'libs/common/config/configuration';
 import { UserModelFactory } from './factory/user-model.factory';
 import { UserRepository } from './infrastructure/adapters/user.repository';
 import { UserEntityModelFactory } from './factory/user-entity-model.factory';
 import { UsersSubscriber } from './infrastructure/entety/subscribers/users.subscriber';
+import { UserQueryFactory } from './factory/user-query.factory';
+import { UserQueryRepository } from './infrastructure/adapters/user-query.repository';
 import { HashModule } from 'libs/common/hash/hahs.module';
+import { FindAllEvent } from 'apps/insta-gateway/src/users/application/events/find-all.event';
+import { FindAllHandlerEvent } from 'apps/insta-gateway/src/users/application/events/find-all-handler.event';
 
 @Module({
   imports: [
@@ -23,6 +27,10 @@ import { HashModule } from 'libs/common/hash/hahs.module';
   ],
   controllers: [UsersAppController],
   providers: [
+    FindAllEvent,
+    FindAllHandlerEvent,
+    UserQueryFactory,
+    UserQueryRepository,
     UsersSubscriber,
     UsersAppService,
     UserModelFactory,

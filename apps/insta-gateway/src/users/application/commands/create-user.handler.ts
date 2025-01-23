@@ -1,5 +1,4 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { CreateUserCommand } from '../create-user.command';
 import {
   RMQ_USERS_PATTERN,
   RMQ_USERS_TOKEN,
@@ -9,6 +8,7 @@ import { Inject } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { User } from 'apps/users-app/src/domain/model/User.model';
 import { lastValueFrom } from 'rxjs';
+import { CreateUserCommand } from './create-user.command';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
