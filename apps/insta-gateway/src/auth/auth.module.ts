@@ -1,23 +1,20 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
-import { ConfigService } from '@nestjs/config';
+import { RegistrationCommand } from './application/command/registration.command';
+import { RegistrationCommandHandler } from './application/command/registration.handler';
 import { CqrsModule } from '@nestjs/cqrs';
-import { CreateUserCommand } from './application/commands/create-user.command';
-import { HashModule } from 'libs/common/hash/hahs.module';
-import { FindAllQuery } from './application/queries/find-all.query';
-import { FindAllQueryHandler } from './application/queries/find-all.handler';
-import { CreateUserHandler } from './application/commands/create-user.handler';
+import configuration from 'libs/common/config/configuration';
 
 @Module({
   imports: [
     CqrsModule,
-    HashModule,
     ClientsModule.register([
       {
-        name: RMQ_USERS_TOKEN.USERS_RMQ,
+        name: RMQ_USERS_TOKEN.AUTH_RMQ,
         // inject: [ConfigService],
         // useFactory: (configService: ConfigService) => ({
 
@@ -33,14 +30,12 @@ import { CreateUserHandler } from './application/commands/create-user.handler';
       },
     ]),
   ],
-  controllers: [UsersController],
+  controllers: [AuthController],
   providers: [
-    CreateUserHandler,
-    CreateUserCommand,
-    FindAllQuery,
-    FindAllQueryHandler,
-    UsersService,
+    AuthService,
+    RegistrationCommand,
+    RegistrationCommandHandler,
     { provide: 'APP_PIPE', useValue: new ValidationPipe({ transform: true }) },
   ],
 })
-export class UsersModule {}
+export class AuthModule {}
