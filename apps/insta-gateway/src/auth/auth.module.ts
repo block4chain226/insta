@@ -7,26 +7,32 @@ import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
 import { RegistrationCommand } from './application/command/registration.command';
 import { RegistrationCommandHandler } from './application/command/registration.handler';
 import { CqrsModule } from '@nestjs/cqrs';
-import configuration from 'libs/common/config/configuration';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
     CqrsModule,
-    ClientsModule.register([
+    ConfigModule.forRoot({
+      envFilePath: [
+        `/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/src/auth/.env`,
+      ],
+      validationSchema: Joi.object({
+        RMQ_USERS_QUEUE: Joi.string().required(),
+        RMQ_URL: Joi.string().required(),
+      }),
+    }),
+    ClientsModule.registerAsync([
       {
         name: RMQ_USERS_TOKEN.USERS_RMQ,
-        // inject: [ConfigService],
-        // useFactory: (configService: ConfigService) => ({
-
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'auth1',
-          queueOptions: {
-            // durable: false,
+        inject: [ConfigService],
+        imports: [ConfigModule],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.get('RMQ_URL'),
+            queue: configService.get('RMQ_USERS_QUEUE'),
           },
-        },
-        // }),
+        }),
       },
     ]),
   ],

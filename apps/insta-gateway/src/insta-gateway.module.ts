@@ -10,13 +10,13 @@ import configuration from 'libs/common/config/configuration';
   imports: [
     UsersModule,
     AuthModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: [
-        '/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/.env',
-      ],
-      load: [configuration],
-    }),
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    //   envFilePath: [
+    //     '/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/.env',
+    //   ],
+    //   load: [configuration],
+    // }),
   ],
   controllers: [InstaGatewayController],
   providers: [InstaGatewayService],

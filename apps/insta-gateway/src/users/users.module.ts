@@ -3,33 +3,40 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CreateUserCommand } from './application/commands/create-user.command';
 import { HashModule } from 'libs/common/hash/hahs.module';
 import { FindAllQuery } from './application/queries/find-all.query';
 import { FindAllQueryHandler } from './application/queries/find-all.handler';
 import { CreateUserHandler } from './application/commands/create-user.handler';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
     CqrsModule,
     HashModule,
-    ClientsModule.register([
+    ConfigModule.forRoot({
+      envFilePath: [
+        `/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/src/users/.env`,
+      ],
+      validationSchema: Joi.object({
+        RMQ_USERS_QUEUE: Joi.string().required(),
+        RMQ_URL: Joi.string().required(),
+      }),
+    }),
+    ClientsModule.registerAsync([
       {
         name: RMQ_USERS_TOKEN.USERS_RMQ,
-        // inject: [ConfigService],
-        // useFactory: (configService: ConfigService) => ({
-
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'auth1',
-          queueOptions: {
-            // durable: false,
+        inject: [ConfigService],
+        imports: [ConfigModule],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: configService.get('RMQ_URL'),
+            queue: configService.get('RMQ_USERS_QUEUE'),
           },
-        },
-        // }),
+        }),
       },
     ]),
   ],

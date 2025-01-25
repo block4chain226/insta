@@ -19,7 +19,6 @@ import { FindAllHandlerEvent } from 'apps/insta-gateway/src/users/application/ev
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     CqrsModule,
     HashModule,
     DatabaseModule,
