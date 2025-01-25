@@ -16,7 +16,6 @@ export class RegistrationCommandHandler
     private readonly usersClient: ClientProxy,
   ) {}
   async execute({ createUserDto }: RegistrationCommand): Promise<void> {
-    console.log('🚀 ~ execute ~ createUserDto:', createUserDto);
     this.usersClient.emit(RMQ_USERS_PATTERN.CREATE_USER, createUserDto);
   }
 }

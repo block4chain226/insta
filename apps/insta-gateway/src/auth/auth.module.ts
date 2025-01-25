@@ -1,13 +1,14 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
 import { RegistrationCommand } from './application/command/registration.command';
 import { RegistrationCommandHandler } from './application/command/registration.handler';
 import { CqrsModule } from '@nestjs/cqrs';
 import * as Joi from 'joi';
+import { RmqModule } from 'libs/rmq/rmq.module';
+import { CreateUserDto } from 'libs/User/dto/create-user.dto';
 
 @Module({
   imports: [
@@ -21,25 +22,15 @@ import * as Joi from 'joi';
         RMQ_URL: Joi.string().required(),
       }),
     }),
-    ClientsModule.registerAsync([
-      {
-        name: RMQ_USERS_TOKEN.USERS_RMQ,
-        inject: [ConfigService],
-        imports: [ConfigModule],
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: configService.get('RMQ_URL'),
-            queue: configService.get('RMQ_USERS_QUEUE'),
-          },
-        }),
-      },
-    ]),
+    RmqModule.register({
+      name: RMQ_USERS_TOKEN.USERS_RMQ,
+    }),
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
     RegistrationCommand,
+    CreateUserDto,
     RegistrationCommandHandler,
     { provide: 'APP_PIPE', useValue: new ValidationPipe({ transform: true }) },
   ],
