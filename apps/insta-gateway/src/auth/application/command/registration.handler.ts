@@ -12,11 +12,11 @@ export class RegistrationCommandHandler
   implements ICommandHandler<RegistrationCommand>
 {
   constructor(
-    @Inject(RMQ_USERS_TOKEN.AUTH_RMQ)
+    @Inject(RMQ_USERS_TOKEN.USERS_RMQ)
     private readonly usersClient: ClientProxy,
   ) {}
-  async execute(createUserDto: RegistrationCommand): Promise<void> {
+  async execute({ createUserDto }: RegistrationCommand): Promise<void> {
     console.log('🚀 ~ execute ~ createUserDto:', createUserDto);
-    this.usersClient.send(RMQ_USERS_PATTERN.CREATE_USER, createUserDto);
+    this.usersClient.emit(RMQ_USERS_PATTERN.CREATE_USER, createUserDto);
   }
 }

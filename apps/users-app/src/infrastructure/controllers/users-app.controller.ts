@@ -16,8 +16,6 @@ export class UsersAppController {
 
   @MessagePattern(RMQ_USERS_PATTERN.CREATE_USER)
   async create(@Payload() createUserDto: CreateUserDto): Promise<User> {
-    console.log('here......');
-
     const { name, email, password } = createUserDto;
     const user = await this.userFactory.create(name, email, password);
     if (!user) throw new InternalServerErrorException('user was not created');

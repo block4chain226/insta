@@ -26,7 +26,7 @@ import { CreateUserHandler } from './application/commands/create-user.handler';
           urls: ['amqp://localhost:5672'],
           queue: 'auth1',
           queueOptions: {
-            durable: false,
+            // durable: false,
           },
         },
         // }),

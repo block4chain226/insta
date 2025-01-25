@@ -14,7 +14,7 @@ import configuration from 'libs/common/config/configuration';
     CqrsModule,
     ClientsModule.register([
       {
-        name: RMQ_USERS_TOKEN.AUTH_RMQ,
+        name: RMQ_USERS_TOKEN.USERS_RMQ,
         // inject: [ConfigService],
         // useFactory: (configService: ConfigService) => ({
 
@@ -23,7 +23,7 @@ import configuration from 'libs/common/config/configuration';
           urls: ['amqp://localhost:5672'],
           queue: 'auth1',
           queueOptions: {
-            durable: false,
+            // durable: false,
           },
         },
         // }),
