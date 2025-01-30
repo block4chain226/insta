@@ -3,6 +3,7 @@ export enum RMQ_USERS_TOKEN {
 }
 
 export enum RMQ_USERS_PATTERN {
+  LOGIN = 'LOGIN',
   CREATE_USER = 'CREATE_USER',
   FIND_ALL = 'FIND_ALL',
 }

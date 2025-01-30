@@ -10,6 +10,10 @@ import * as Joi from 'joi';
 import { RmqModule } from 'libs/rmq/rmq.module';
 import { CreateUserDto } from 'libs/User/dto/create-user.dto';
 import { HashModule } from 'libs/common/hash/hahs.module';
+import { LocalStrategy } from './strategies/local.strategy';
+import { LoginQuery } from './application/query/login/login.guery';
+import { LoginQueryHandler } from './application/query/login/login-query.handler';
+import { NotFoundException } from './application/filters/not-found.filter';
 
 @Module({
   imports: [
@@ -30,6 +34,13 @@ import { HashModule } from 'libs/common/hash/hahs.module';
   ],
   controllers: [AuthController],
   providers: [
+    // {
+    //   provide: 'APP_FILTER',
+    //   useClass: NotFoundException,
+    // },
+    LoginQueryHandler,
+    LoginQuery,
+    LocalStrategy,
     AuthService,
     RegistrationCommand,
     CreateUserDto,

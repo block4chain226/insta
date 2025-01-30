@@ -5,8 +5,6 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { DatabaseModule } from 'libs/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './infrastructure/entety/user.entity';
-import { ConfigModule } from '@nestjs/config';
-import configuration from 'libs/common/config/configuration';
 import { UserModelFactory } from './factory/user-model.factory';
 import { UserRepository } from './infrastructure/adapters/user.repository';
 import { UserEntityModelFactory } from './factory/user-entity-model.factory';

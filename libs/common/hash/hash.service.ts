@@ -8,7 +8,7 @@ export class HashService {
     return await bcrypt.hash(data, 10);
   }
 
-  async compare(data: string, reference: string): Promise<boolean> {
-    return await bcrypt.compare(data, reference);
+  async compare(reference: string, data: string): Promise<boolean> {
+    return await bcrypt.compare(reference, data);
   }
 }

@@ -11,6 +11,8 @@ import { FindAllQueryHandler } from './application/queries/find-all.handler';
 import { CreateUserHandler } from './application/commands/create-user.handler';
 import * as Joi from 'joi';
 import { RmqModule } from 'libs/rmq/rmq.module';
+import { QueryFailedFilter } from './filters/query-exception-error.filter';
+import { NotFoundFilter } from './filters/not-found.filter';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { RmqModule } from 'libs/rmq/rmq.module';
   ],
   controllers: [UsersController],
   providers: [
+    { provide: 'APP_FILTER', useClass: NotFoundFilter },
     CreateUserHandler,
     CreateUserCommand,
     FindAllQuery,
