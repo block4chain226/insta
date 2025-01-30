@@ -38,6 +38,7 @@
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.5",
     "bcrypt": "^5.1.1",
+    "hash-object": "^5.0.1",
     "joi": "^17.13.3",
     "nestjs-grpc-exceptions": "^0.2.2",
     "passport": "^0.7.0",
