@@ -1,6 +1,5 @@
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { IRepositoryAbstract } from '../ports/out/repository-abstract.interface';
-import { User } from 'apps/users-app/src/infrastructure/entety/user.entity';
 import { IEntityModelFactory } from '../interfaces/entity-model.interface';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { IdentityAbstract } from './identity-entity.abstract';

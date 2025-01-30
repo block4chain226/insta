@@ -5,6 +5,7 @@ import { UserRepository } from '../infrastructure/adapters/user.repository';
 import { v4 } from 'uuid';
 import { ResponseUserDto } from 'libs/User/dto/response-user.dto';
 import { User as UserEntity } from '../infrastructure/entety/user.entity';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class UserModelFactory
@@ -12,8 +13,18 @@ export class UserModelFactory
 {
   constructor(private readonly userRepository: UserRepository) {}
   async create(name: string, email: string, password: string) {
-    const user = new User(v4(), name, email, password);
-    const newUser = await this.userRepository.create(user);
-    return newUser;
+    try {
+      const user = new User();
+      user.id = v4();
+      user.name = null;
+      user.email = email;
+      user.password = password;
+
+      const newUser = await this.userRepository.create(user);
+      return newUser;
+    } catch (err) {
+      console.log('vasa', err);
+      throw new RpcException(err);
+    }
   }
 }

@@ -3,16 +3,22 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
-import { RegistrationCommand } from './application/command/registration.command';
-import { RegistrationCommandHandler } from './application/command/registration.handler';
+import { RegistrationCommand } from './application/command/registration/registration.command';
+import { RegistrationCommandHandler } from './application/command/registration/registration.handler';
 import { CqrsModule } from '@nestjs/cqrs';
 import * as Joi from 'joi';
 import { RmqModule } from 'libs/rmq/rmq.module';
 import { CreateUserDto } from 'libs/User/dto/create-user.dto';
+import { HashModule } from 'libs/common/hash/hahs.module';
+import { LocalStrategy } from './strategies/local.strategy';
+import { LoginQuery } from './application/query/login/login.guery';
+import { LoginQueryHandler } from './application/query/login/login-query.handler';
+import { NotFoundException } from './application/filters/not-found.filter';
 
 @Module({
   imports: [
     CqrsModule,
+    HashModule,
     ConfigModule.forRoot({
       envFilePath: [
         `/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/src/auth/.env`,
@@ -28,6 +34,13 @@ import { CreateUserDto } from 'libs/User/dto/create-user.dto';
   ],
   controllers: [AuthController],
   providers: [
+    // {
+    //   provide: 'APP_FILTER',
+    //   useClass: NotFoundException,
+    // },
+    LoginQueryHandler,
+    LoginQuery,
+    LocalStrategy,
     AuthService,
     RegistrationCommand,
     CreateUserDto,
