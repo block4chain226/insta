@@ -26,4 +26,8 @@ export class Post extends AggregateRoot implements IPost {
   static create(id: string, description: string, content: Content[]): Post {
     return new Post(id, content, description);
   }
+
+  private addContent(content: Content[]) {
+    content.map((item) => this._content.push(item));
+  }
 }

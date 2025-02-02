@@ -16,7 +16,7 @@ export class UserModelFactory
     try {
       const user = new User();
       user.id = v4();
-      user.name = null;
+      user.name = name;
       user.email = email;
       user.password = password;
 
