@@ -1,6 +1,5 @@
 export enum RMQ_USERS_TOKEN {
   USERS_RMQ = 'USERS',
-  PRODUCT_RMQ = 'PRODUCT',
 }
 
 export enum RMQ_USERS_PATTERN {

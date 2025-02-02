@@ -6,6 +6,7 @@ import * as Joi from 'joi';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
+import { RMQ_POST_PATTERN, RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { PostService } from './post.service';
         RMQ_URL: Joi.string().required(),
       }),
     }),
-    RmqModule.register({ name: RMQ_USERS_TOKEN.PRODUCT_RMQ }),
+    RmqModule.register({ name: RMQ_POST_TOKEN.POST_RMQ }),
   ],
   controllers: [PostController],
   providers: [PostService],
