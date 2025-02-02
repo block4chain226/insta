@@ -4,28 +4,31 @@ import {
   FileTypeValidator,
   MaxFileSizeValidator,
   ParseFilePipe,
+  Post,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { PostFileTypes } from 'libs/Post/constant/post.constant';
 import { CreatePostDto } from 'libs/Post/dto/create-post.dto';
 import { CreatePostCommand } from './application/command/create/create-post.command';
+import { fileTypes } from 'libs/Post/constant/post.constant';
 
-@Controller('post')
+@Controller('posts')
 export class PostController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @Post()
   @UseInterceptors(FilesInterceptor('files'))
   async create(
     @Body() createPostDto: CreatePostDto,
     @UploadedFiles(
       new ParseFilePipe({
         validators: [
-          new FileTypeValidator({ fileType: PostFileTypes.JPEG }),
-          new MaxFileSizeValidator({ maxSize: 5000 }),
-          new FileTypeValidator({ fileType: PostFileTypes.MPEG4 }),
+          new FileTypeValidator({
+            fileType: new RegExp(fileTypes.join('|')),
+          }),
+          new MaxFileSizeValidator({ maxSize: 500000 }),
         ],
       }),
     )

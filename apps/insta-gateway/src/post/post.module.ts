@@ -7,6 +7,8 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
 import { RMQ_POST_PATTERN, RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
+import { CreatePostCommand } from './application/command/create/create-post.command';
+import { CreatePostHandler } from './application/command/create/create-post.handler';
 
 @Module({
   imports: [
@@ -21,6 +23,6 @@ import { RMQ_POST_PATTERN, RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
     RmqModule.register({ name: RMQ_POST_TOKEN.POST_RMQ }),
   ],
   controllers: [PostController],
-  providers: [PostService],
+  providers: [PostService, CreatePostCommand, CreatePostHandler],
 })
 export class PostModule {}
