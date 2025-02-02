@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { AuthService } from '../auth.service';
 import { QueryBus } from '@nestjs/cqrs';
 import { LoginQuery } from '../application/query/login/login.guery';
+import { User } from 'apps/users-app/src/domain/model/User.model';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -13,9 +13,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(email: string, password: string) {
+  async validate(email: string, password: string): Promise<User> {
     const loginDto = { email, password };
-    const result = await this.queryBus.execute(new LoginQuery(loginDto));
-    return result;
+    return await this.queryBus.execute(new LoginQuery(loginDto));
   }
 }

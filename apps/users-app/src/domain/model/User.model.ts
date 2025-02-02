@@ -3,12 +3,14 @@ import { IUser } from './User.interface';
 import { BadRequestException } from '@nestjs/common';
 
 export class User extends AggregateRoot implements IUser {
-  private regexs = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  private _id: string;
-  private _name: string;
-  private _email: string;
-  private _password: string;
-  constructor() {
+  // regexs = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  constructor(
+    private _id: string,
+    private _name: string,
+    private _email: string,
+    private _password: string,
+  ) {
     super();
   }
 
@@ -20,9 +22,9 @@ export class User extends AggregateRoot implements IUser {
   }
 
   set email(value: string) {
-    if (!this.regexs.test(value)) {
-      throw new Error('User model: not correct email');
-    }
+    // if (!this.regexs.test(value)) {
+    //   throw new Error('User model: not correct email');
+    // }
     this._email = value;
   }
 
@@ -41,18 +43,18 @@ export class User extends AggregateRoot implements IUser {
   }
 
   get id(): string {
-    return this._id;
+    return this.id;
   }
 
   get name(): string {
-    return this._name;
+    return this.name;
   }
 
   get email(): string {
-    return this._email;
+    return this.email;
   }
 
   get password(): string {
-    return this._password;
+    return this.password;
   }
 }

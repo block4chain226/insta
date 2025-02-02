@@ -16,11 +16,16 @@ export class UserEntityModelFactory
     return user;
   }
   createFromEntity(entity: UserEntity): User {
-    const user = new User();
-    user.id = entity.id;
-    user.name = entity.name;
-    user.email = entity.email;
-    user.password = entity.password;
+    const user = new User(
+      entity.id,
+      entity.name,
+      entity.email,
+      entity.password,
+    );
+    // user.id = entity.id;
+    // user.name = entity.name;
+    // user.email = entity.email;
+    // user.password = entity.password;
     return user;
   }
 }

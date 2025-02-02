@@ -9,7 +9,7 @@ import { UserModelFactory } from './factory/user-model.factory';
 import { UserRepository } from './infrastructure/adapters/user.repository';
 import { UserEntityModelFactory } from './factory/user-entity-model.factory';
 import { UsersSubscriber } from './infrastructure/entety/subscribers/users.subscriber';
-import { UserQueryFactory } from './factory/user-query.factory';
+import { UsersQuery } from './factory/user-query';
 import { UserQueryRepository } from './infrastructure/adapters/user-query.repository';
 import { HashModule } from 'libs/common/hash/hahs.module';
 import { FindAllEvent } from 'apps/insta-gateway/src/users/application/events/find-all.event';
@@ -26,7 +26,7 @@ import { FindAllHandlerEvent } from 'apps/insta-gateway/src/users/application/ev
   providers: [
     FindAllEvent,
     FindAllHandlerEvent,
-    UserQueryFactory,
+    UsersQuery,
     UserQueryRepository,
     UsersSubscriber,
     UsersAppService,
