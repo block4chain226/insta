@@ -14,11 +14,11 @@ export class UserModelFactory
   constructor(private readonly userRepository: UserRepository) {}
   async create(name: string, email: string, password: string) {
     try {
-      const user = new User();
-      user.id = v4();
-      user.name = null;
-      user.email = email;
-      user.password = password;
+      const user = new User(v4(), name, email, password);
+      // user.id = v4();
+      // user.name = name;
+      // user.email = email;
+      // user.password = password;
 
       const newUser = await this.userRepository.create(user);
       return newUser;

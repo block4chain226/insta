@@ -5,16 +5,9 @@ import {
   RMQ_USERS_TOKEN,
 } from 'libs/User/rabbitmq/constants';
 import { ClientProxy } from '@nestjs/microservices';
-import {
-  Inject,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HashService } from 'libs/common/hash/hash.service';
-import { plainToClass, plainToInstance } from 'class-transformer';
-import { ResponseUserDto } from 'libs/User/dto/response-user.dto';
-import { log } from 'console';
 import { User } from 'apps/users-app/src/domain/model/User.model';
 
 @QueryHandler(LoginQuery)
@@ -25,7 +18,7 @@ export class LoginQueryHandler implements IQueryHandler<LoginQuery> {
     private readonly hashService: HashService,
   ) {}
 
-  async execute({ loginDto }: LoginQuery): Promise<User> {
+  async execute({ loginDto }: LoginQuery): Promise<string> {
     try {
       const userObservable = this.usersClient.send(
         RMQ_USERS_PATTERN.LOGIN,

@@ -8,7 +8,7 @@ import { CreateUserDto } from 'libs/User/dto/create-user.dto';
 import { RMQ_USERS_PATTERN } from 'libs/User/rabbitmq/constants';
 import { UserModelFactory } from '../../factory/user-model.factory';
 import { User } from '../../domain/model/User.model';
-import { UserQueryFactory } from '../../factory/user-query.factory';
+import { UsersQuery } from '../../factory/user-query';
 import { ResponseUserDto } from 'libs/User/dto/response-user.dto';
 import { LoginDto } from 'libs/registration/dto/login.dto';
 import { ExceptionFilter } from 'libs/common/filters/intrinsic.filter';
@@ -18,7 +18,7 @@ import { RpcExceptionFilter } from 'apps/users-app/filters/rpc-exception.filter'
 export class UsersAppController {
   constructor(
     private readonly userFactory: UserModelFactory,
-    private readonly userQueryFactory: UserQueryFactory,
+    private readonly usersQuery: UsersQuery,
   ) {}
 
   @UseFilters(new RpcExceptionFilter())
@@ -32,13 +32,13 @@ export class UsersAppController {
 
   @MessagePattern(RMQ_USERS_PATTERN.FIND_ALL)
   async findAll(@Payload() query: object): Promise<ResponseUserDto[]> {
-    return await this.userQueryFactory.findAll();
+    return await this.usersQuery.findAll();
   }
 
   @UseFilters(new ExceptionFilter())
   @MessagePattern(RMQ_USERS_PATTERN.LOGIN)
   async login(@Payload() loginDto: LoginDto): Promise<User> {
-    return await this.userQueryFactory.login(loginDto);
+    return await this.usersQuery.login(loginDto);
   }
 }
 

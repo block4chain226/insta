@@ -6,11 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import configuration from 'libs/common/config/configuration';
 import { ExceptionFilter } from 'libs/common/filters/intrinsic.filter';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    PostModule,
 
     // ConfigModule.forRoot({
     //   isGlobal: true,

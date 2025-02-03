@@ -13,6 +13,8 @@ import * as Joi from 'joi';
 import { RmqModule } from 'libs/rmq/rmq.module';
 import { QueryFailedFilter } from './filters/query-exception-error.filter';
 import { NotFoundFilter } from './filters/not-found.filter';
+import { JwtAuthGuard } from 'libs/common/guard/auth.guard';
+import { JwtAuthStrategy } from 'libs/common/guard/jwt-auth.strategy';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { NotFoundFilter } from './filters/not-found.filter';
   controllers: [UsersController],
   providers: [
     { provide: 'APP_FILTER', useClass: NotFoundFilter },
+    JwtAuthGuard,
+    JwtAuthStrategy,
     CreateUserHandler,
     CreateUserCommand,
     FindAllQuery,

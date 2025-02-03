@@ -16,6 +16,7 @@ export abstract class BaseRepository<
 
   async create(data: TModel): Promise<TModel> {
     const entityFromModel = this.entityModelFactory.createFromModel(data);
+    console.log('🚀 ~ create ~ entityFromModel:', entityFromModel);
     const entity = this.repository.create(entityFromModel);
     const saved = await this.repository.save(entity);
     return this.entityModelFactory.createFromEntity(saved);

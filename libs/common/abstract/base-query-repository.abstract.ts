@@ -27,7 +27,9 @@ export abstract class BaseQueryAbstractRepository<
   }
 
   async findOneBy(query: FindOptionsWhere<TEntity>): Promise<TModel> {
+    console.log('🚀 ~ findOneBy ~ query:', query);
     const entity = await this.repository.findOneBy(query);
+    console.log('🚀 ~ findOneBy ~ entity:', entity);
     if (!entity) throw new RpcException('credentials');
     return this.entityModelFactory.createFromEntity(entity);
   }

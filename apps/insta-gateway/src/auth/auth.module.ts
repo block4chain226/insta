@@ -1,7 +1,7 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
 import { RegistrationCommand } from './application/command/registration/registration.command';
 import { RegistrationCommandHandler } from './application/command/registration/registration.handler';
@@ -14,15 +14,25 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { LoginQuery } from './application/query/login/login.guery';
 import { LoginQueryHandler } from './application/query/login/login-query.handler';
 import { NotFoundException } from './application/filters/not-found.filter';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtTokenQuery } from './application/query/jwt-token/jwt-token.query';
+import { JwtTokenQueryHandler } from './application/query/jwt-token/jwt-token-query.handler';
+import { UserEntityModelFactory } from 'apps/users-app/src/factory/user-entity-model.factory';
 
 @Module({
   imports: [
     CqrsModule,
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+      }),
+    }),
     HashModule,
     ConfigModule.forRoot({
-      envFilePath: [
-        `/Users/admin/Documents/Backend/nestjs/insta/apps/insta-gateway/src/auth/.env`,
-      ],
+      envFilePath: [`apps/insta-gateway/src/auth/.env`],
       validationSchema: Joi.object({
         RMQ_USERS_QUEUE: Joi.string().required(),
         RMQ_URL: Joi.string().required(),
@@ -34,10 +44,9 @@ import { NotFoundException } from './application/filters/not-found.filter';
   ],
   controllers: [AuthController],
   providers: [
-    // {
-    //   provide: 'APP_FILTER',
-    //   useClass: NotFoundException,
-    // },
+    UserEntityModelFactory,
+    JwtTokenQuery,
+    JwtTokenQueryHandler,
     LoginQueryHandler,
     LoginQuery,
     LocalStrategy,

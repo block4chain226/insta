@@ -1,22 +1,8 @@
-class Person {
-  private _name: string;
-  constructor(name: string) {
-    this._name = name;
-  }
-  public set name(value: string) {
-    console.log('vadaskf;lslf;ls');
+import hashObject from 'hash-object';
 
-    if (value === 'v') {
-      throw new Error('name');
-    }
-    this._name = value;
-  }
+const a = { a: 200, b: undefined };
+const b = { a: 200, b: null };
 
-  public get name() {
-    return this._name;
-  }
-}
-
-const person = new Person('v');
-person.name = 'v';
-console.log('🚀 ~ person:', person);
+const hashA = hashObject(a);
+const hashB = hashObject(b);
+console.log('🚀 ~ hashB:', hashA === hashB);

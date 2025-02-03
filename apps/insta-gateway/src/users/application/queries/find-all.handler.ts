@@ -21,5 +21,6 @@ export class FindAllQueryHandler implements IQueryHandler<FindAllQuery> {
       this.usersClient.send(RMQ_USERS_PATTERN.FIND_ALL, {}),
     );
     console.log('🚀 ~ FindAllQueryHandler ~ execute ~ user:', user[0]);
+    return user;
   }
 }

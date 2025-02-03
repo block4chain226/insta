@@ -1,10 +1,11 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
 import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
 
 type RmqModuleOptions = {
-  name: RMQ_USERS_TOKEN;
+  name: RMQ_USERS_TOKEN | RMQ_POST_TOKEN;
 };
 
 @Module({
