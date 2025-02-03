@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { HashService } from 'libs/common/hash/hash.service';
 import { ResponseUserDto } from 'libs/User/dto/response-user.dto';
 import { FindAllQuery } from './application/queries/find-all.query';
 import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
+import { JwtAuthGuard } from 'libs/common/guard/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -32,6 +34,7 @@ export class UsersController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return await this.queryBus.execute(new FindAllQuery());

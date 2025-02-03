@@ -8,6 +8,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HashService } from 'libs/common/hash/hash.service';
+import { User } from 'apps/users-app/src/domain/model/User.model';
 
 @QueryHandler(LoginQuery)
 export class LoginQueryHandler implements IQueryHandler<LoginQuery> {

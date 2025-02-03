@@ -13,6 +13,8 @@ export class UserEntityModelFactory
     user.id = model.id;
     user.name = model.name;
     user.password = model.password;
+    console.log('convert', user);
+
     return user;
   }
   createFromEntity(entity: UserEntity): User {

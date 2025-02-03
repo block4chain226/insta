@@ -43,18 +43,18 @@ export class User extends AggregateRoot implements IUser {
   }
 
   get id(): string {
-    return this.id;
+    return this._id;
   }
 
   get name(): string {
-    return this.name;
+    return this._name;
   }
 
   get email(): string {
-    return this.email;
+    return this._email;
   }
 
   get password(): string {
-    return this.password;
+    return this._password;
   }
 }

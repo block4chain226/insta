@@ -17,6 +17,7 @@ import { NotFoundException } from './application/filters/not-found.filter';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtTokenQuery } from './application/query/jwt-token/jwt-token.query';
 import { JwtTokenQueryHandler } from './application/query/jwt-token/jwt-token-query.handler';
+import { UserEntityModelFactory } from 'apps/users-app/src/factory/user-entity-model.factory';
 
 @Module({
   imports: [
@@ -43,10 +44,7 @@ import { JwtTokenQueryHandler } from './application/query/jwt-token/jwt-token-qu
   ],
   controllers: [AuthController],
   providers: [
-    // {
-    //   provide: 'APP_FILTER',
-    //   useClass: NotFoundException,
-    // },
+    UserEntityModelFactory,
     JwtTokenQuery,
     JwtTokenQueryHandler,
     LoginQueryHandler,
