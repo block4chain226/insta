@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
 import { RmqModule } from 'libs/rmq/rmq.module';
-import { RMQ_USERS_TOKEN } from 'libs/User/rabbitmq/constants';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
-import { RMQ_POST_PATTERN, RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
-import { CreatePostCommand } from './application/command/create/create-post.command';
-import { CreatePostHandler } from './application/command/create/create-post.handler';
+import { RMQ_POST_TOKEN } from 'libs/Post/rabbitmq/constants';
 
 @Module({
   imports: [
@@ -23,6 +20,6 @@ import { CreatePostHandler } from './application/command/create/create-post.hand
     RmqModule.register({ name: RMQ_POST_TOKEN.POST_RMQ }),
   ],
   controllers: [PostController],
-  providers: [PostService, CreatePostCommand, CreatePostHandler],
+  providers: [PostService],
 })
 export class PostModule {}

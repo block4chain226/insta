@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './configure/configuration';
 import { PostFactory } from './domain/factory/post.factory';
+import { CreatePostCommand } from './application/command/create/create-post.command';
+import { CreatePostHandler } from './application/command/create/create-post.handler';
 
 @Module({
   imports: [
@@ -22,6 +24,11 @@ import { PostFactory } from './domain/factory/post.factory';
     }),
   ],
   controllers: [PostAppController],
-  providers: [PostAppService, PostFactory],
+  providers: [
+    PostAppService,
+    CreatePostCommand,
+    CreatePostHandler,
+    PostFactory,
+  ],
 })
 export class PostAppModule {}
