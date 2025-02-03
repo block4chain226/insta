@@ -13,3 +13,5 @@ export class PostAppController {
     console.log('files', files);
   }
 }
+
+//TODO create post with content, create entities with embeded maybe refactor post-gateway and posts-app(move application from post-gateway to posts-app, invoke rmq from post.controller)
