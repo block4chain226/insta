@@ -3,7 +3,7 @@ import { JwtTokenQuery } from './jwt-token.query';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-type TypePayload = { id: string; name: string; email: string };
+export type TypePayload = { id: string; name: string; email: string };
 
 @QueryHandler(JwtTokenQuery)
 export class JwtTokenQueryHandler implements IQueryHandler<JwtTokenQuery> {
